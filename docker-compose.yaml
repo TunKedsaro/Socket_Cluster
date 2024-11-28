@@ -10,4 +10,10 @@ services:
     build:
       context: ./Plus_folder
     ports:
-      - "8081:8081"
+      - "8081:8081"  
+  
+  time_service:
+    build:
+      context: ./Time_folder
+    ports:
+      - "8082:8082"

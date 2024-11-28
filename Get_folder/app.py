@@ -45,6 +45,42 @@ async def add_numbers(num1: float, num2: float):
         result = float(result)                       # Convert result to float 
 
 ##################################################################################################################
-        return {"result": result}                    # then return it
+
+        client_socket3 = socket.socket(
+            socket.AF_INET,
+            socket.SOCK_STREAM
+        )
+        client_socket3.connect(
+            ("diff_service", 8083)
+        )
+        message = f"{result}"
+        encode_message = message.encode()
+        client_socket3.sendall(encode_message)        # ->
+
+        # Receive the result
+        result = client_socket3.recv(1024).decode()   # <- Receive data 1024 byte from server then decode it
+        client_socket3.close()                        # close connection with Plus service
+        result = float(result)                        # Convert result to float 
+
+##################################################################################################################
+
+        client_socket4 = socket.socket(
+            socket.AF_INET,
+            socket.SOCK_STREAM
+        )
+        client_socket4.connect(
+            ("minus_service", 8085)
+        )
+        message = f"{result}"
+        encode_message = message.encode()
+        client_socket4.sendall(encode_message)        # ->
+
+        # Receive the result
+        result = client_socket4.recv(1024).decode()   # <- Receive data 1024 byte from server then decode it
+        client_socket4.close()                        # close connection with Plus service
+        result = float(result)                        # Convert result to float 
+
+##################################################################################################################
+        return {"result": result}                     # then return it
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))   # Raise error message

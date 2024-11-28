@@ -17,3 +17,15 @@ services:
       context: ./Time_folder
     ports:
       - "8082:8082"
+
+  diff_service:
+    build:
+      context: ./Diff_folder
+    ports:
+      - "8083:8083"
+  
+  minus_service:
+    build:
+      context: ./Minus_folder
+    ports:
+      - "8085:8085"
